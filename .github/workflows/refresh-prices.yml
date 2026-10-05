@@ -5,6 +5,7 @@
 # Configuración (Settings → Secrets and variables → Actions):
 #   secret   CRON_SECRET  → el mismo valor que en Vercel
 #   variable SITE_URL     → https://tu-dominio.es
+# Mientras no exista CRON_SECRET, el paso se salta sin fallar.
 name: Refrescar precios
 
 on:
@@ -16,9 +17,16 @@ jobs:
   refresh:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    env:
+      CRON_SECRET: ${{ secrets.CRON_SECRET }}
+      SITE_URL: ${{ vars.SITE_URL }}
     steps:
       - name: Llamar al endpoint de refresco
+        if: env.CRON_SECRET != '' && env.SITE_URL != ''
         run: |
           curl --fail-with-body --silent --show-error --max-time 180 \
-            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
-            "${{ vars.SITE_URL }}/api/cron/refresh"
+            -H "Authorization: Bearer $CRON_SECRET" \
+            "$SITE_URL/api/cron/refresh"
+      - name: Sin configurar
+        if: env.CRON_SECRET == '' || env.SITE_URL == ''
+        run: echo "Falta el secret CRON_SECRET o la variable SITE_URL; no se refresca."
