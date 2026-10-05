@@ -6,7 +6,7 @@ import { getEvSnapshot } from "@/lib/store";
 export const maxDuration = 120;
 
 const MAX_RADIUS_KM = 40;
-const MAX_RESULTS = 800;
+const MAX_RESULTS = 2000;
 
 /** POST { lat, lon, radius } → puntos de recarga del NAP en ese radio. Los filtros y cálculos se hacen en el navegador. */
 export async function POST(request: Request) {
