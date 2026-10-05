@@ -39,7 +39,8 @@ const RETRY_AFTER_FAILURE_MS = 2 * 60 * 1000;
 
 function supabase(): SupabaseClient | null {
   const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  // La integración Supabase de Vercel crea ambas; la "secret key" es el formato nuevo de Supabase.
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_SECRET_KEY;
   if (!url || !key) return null;
   return createClient(url, key, { auth: { persistSession: false } });
 }
