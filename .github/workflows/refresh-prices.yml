@@ -1,0 +1,24 @@
+# Refresca los precios oficiales cada 10 minutos, aunque nadie visite la web.
+# El Ministerio publica cada media hora; con este margen los datos llegan como mucho ~10 min tarde
+# (GitHub puede retrasar las ejecuciones programadas unos minutos en horas punta).
+#
+# Configuración (Settings → Secrets and variables → Actions):
+#   secret   CRON_SECRET  → el mismo valor que en Vercel
+#   variable SITE_URL     → https://tu-dominio.es
+name: Refrescar precios
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Llamar al endpoint de refresco
+        run: |
+          curl --fail-with-body --silent --show-error --max-time 180 \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            "${{ vars.SITE_URL }}/api/cron/refresh"
