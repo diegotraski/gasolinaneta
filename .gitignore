@@ -49,3 +49,7 @@ next-env.d.ts
 
 # Supabase CLI
 supabase/.temp/
+
+# instrucciones para asistentes generadas por herramientas
+AGENTS.md
+CLAUDE.md
