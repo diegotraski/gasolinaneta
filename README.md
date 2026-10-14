@@ -1,10 +1,67 @@
-# GasolinaNeta
+<div align="center">
 
-> La más barata no siempre es la que más ahorra.
+# ⛽ GasolinaNeta
 
-Calculadora web que compara las gasolineras cercanas por **ahorro neto**: lo que ahorras en el surtidor menos el combustible que gastas en llegar. Usa los precios oficiales del Ministerio.
+**La más barata no siempre es la que más ahorra**
 
-Stack: Next.js 16 (App Router) + TypeScript + Tailwind 4, MapLibre GL + OpenFreeMap (mapa vectorial), OSRM (rutas reales), Supabase (Postgres) como caché de precios, Vercel (hosting + cron).
+Calculadora web que compara las gasolineras y los puntos de recarga cercanos por **ahorro neto**: lo que ahorras en el surtidor menos lo que gastas en llegar. Usa los precios oficiales del Ministerio y rutas reales por carretera.
+
+[![Demo](https://img.shields.io/badge/Probar_la_demo-gasolinaneta.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://gasolinaneta.vercel.app)
+
+![Next.js](https://img.shields.io/badge/Next.js_16-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![MapLibre](https://img.shields.io/badge/MapLibre_GL-396CB2?style=for-the-badge&logo=maplibre&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![Vitest](https://img.shields.io/badge/Vitest-37_tests-6E9F18?style=for-the-badge&logo=vitest&logoColor=white)
+![License](https://img.shields.io/badge/Licencia-MIT-green?style=for-the-badge)
+
+<img src="docs/screenshot.png" alt="Página principal de GasolinaNeta con el ejemplo de ahorro neto y la calculadora" width="90%">
+
+</div>
+
+<details>
+<summary>🇬🇧 <b>English summary</b></summary>
+
+<br>
+
+**GasolinaNeta** is a web calculator that ranks nearby petrol stations and EV chargers by **net savings**: the money saved at the pump minus the fuel spent driving there. It uses the official Spanish Ministry price API (11,000+ stations, updated every 30 minutes), the DGT open dataset of 12,000 EV charging sites, real road distances from OSRM and an interactive MapLibre map. The savings formula is a pure, tested function (Vitest), prices are cached in Supabase and refreshed by GitHub Actions and Vercel Cron. Validated with real data in 6 Spanish cities: in up to half of the scenarios, the cheapest station is **not** the one that saves you the most.
+
+</details>
+
+---
+
+## 💡 La idea
+
+Mucha gente cruza la ciudad para repostar en la gasolinera más barata sin pensar en el combustible que gasta en el camino. GasolinaNeta hace la cuenta completa: **precio en el surtidor − coste de ir y volver = ahorro real**. Con datos reales de 6 ciudades, en hasta la mitad de los escenarios la gasolinera más barata **no** es la que más ahorra.
+
+## ✨ Funcionalidades
+
+- 📍 **Ubicación o código postal** y radio de búsqueda; resultados en mapa interactivo y en lista.
+- 🧮 **Ahorro neto por gasolinera**, con distancias y tiempos reales por carretera (OSRM).
+- 🕒 **Horarios oficiales interpretados**: oculta las cerradas y avisa si cierran antes de que llegues.
+- ⚡ **Modo eléctrico**: 12.038 puntos de recarga oficiales (DGT), precios verificados por operador y tiempo de carga según el coche.
+- 🔄 **Precios siempre frescos**: el Ministerio publica cada 30 min y la app se actualiza cada ~10 min (GitHub Actions + Vercel Cron + caché en Supabase).
+- ✅ **37 tests** de la fórmula, la normalización de datos y los horarios.
+
+## 🛠️ Tecnologías
+
+| Capa | Tecnología |
+|---|---|
+| Frontend | Next.js 16 (App Router), React, TypeScript, Tailwind CSS 4 |
+| Mapa y rutas | MapLibre GL + OpenFreeMap, OSRM, Nominatim |
+| Datos | API REST del Ministerio (carburantes), DGT DATEX II (recarga eléctrica) |
+| Backend | Rutas API de Next.js, Supabase (PostgreSQL) como caché |
+| Automatización | GitHub Actions y Vercel Cron |
+| Calidad | Vitest, ESLint |
+
+## 👤 Autor
+
+**Diego Trascasa García** · [LinkedIn](https://www.linkedin.com/in/diego-trascasa-garc%C3%ADa-b171382b2/) · [GitHub](https://github.com/diegotraski)
+
+---
+
+# 📚 Documentación técnica
 
 ## Modo eléctrico
 
